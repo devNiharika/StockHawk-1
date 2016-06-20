@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/widget_margin"
     android:orientation="vertical">
 
     <TextView
@@ -12,7 +12,7 @@
         android:background="@color/md_material_blue_600"
         android:gravity="start"
         android:padding="10dp"
-        android:text="Today's Market"
+        android:text="@string/widget_title"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold" />

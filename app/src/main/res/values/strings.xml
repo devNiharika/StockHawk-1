@@ -5,8 +5,12 @@
     <string name="action_change_units">Change Units</string>
     <string name="symbol_search">Symbol Search</string>
     <string name="content_test">Search for a Stock Symbol</string>
-    <string name="input_hint">FB</string>
-    <string name="input_prefill"></string>
+    <string name="input_hint" translatable="false">FB</string>
+    <string name="input_prefill" translatable="false" />
     <string name="network_toast">Uh-oh! This app requires an internet connection</string>
     <string name="add_widget">Add widget</string>
+    <string name="non_existent_stock">"Non existent stock"</string>
+    <string name="stock_already_saved">"This stock is already saved!"</string>
+    <string name="add">"Add Stock"</string>
+    <string name="widget_title">"Today's Market"</string>
 </resources>
