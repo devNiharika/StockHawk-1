@@ -14,4 +14,10 @@
         android:title="@string/action_settings"
         android:visible="false"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/refresh"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:orderInCategory="98"
+        android:title="@string/action_refresh"
+        app:showAsAction="ifRoom" />
 </menu>

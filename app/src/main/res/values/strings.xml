@@ -13,4 +13,5 @@
     <string name="stock_already_saved">"This stock is already saved!"</string>
     <string name="add">"Add Stock"</string>
     <string name="widget_title">"Today's Market"</string>
+    <string name="action_refresh">"Refresh"</string>
 </resources>
