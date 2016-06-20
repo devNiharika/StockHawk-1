@@ -242,7 +242,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
         if (isConnected) {
-            mServiceIntent.putExtra("tag", "refresh");
+            mServiceIntent.putExtra("tag", "periodic");
             startService(mServiceIntent);
         } else {
             networkToast();
