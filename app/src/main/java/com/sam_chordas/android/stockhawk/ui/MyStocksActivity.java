@@ -201,14 +201,15 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_change_units) {
-            // this is for changing stock changes from percent value to dollar value
-            Utils.showPercent = !Utils.showPercent;
-            this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+        switch (id) {
+            case R.id.refresh:
+                refresh();
+                break;
+            case R.id.action_change_units:
+                // this is for changing stock changes from percent value to dollar value
+                Utils.showPercent = !Utils.showPercent;
+                this.getContentResolver().notifyChange(QuoteProvider.Quotes.CONTENT_URI, null);
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -234,6 +235,18 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mCursorAdapter.swapCursor(null);
+    }
+
+    public void refresh() {
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if (isConnected) {
+            mServiceIntent.putExtra("tag", "refresh");
+            startService(mServiceIntent);
+        } else {
+            networkToast();
+        }
     }
 
 }
