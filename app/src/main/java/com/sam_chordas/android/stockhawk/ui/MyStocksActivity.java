@@ -87,6 +87,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     @Override
                     public void onItemClick(View v, int position) {
                         Intent intent = new Intent(mContext, LineGraphActivity.class);
+                        intent.putExtra("Stock_Symbol", R.id.stock_symbol);
                         startActivity(intent);
                     }
                 }));
