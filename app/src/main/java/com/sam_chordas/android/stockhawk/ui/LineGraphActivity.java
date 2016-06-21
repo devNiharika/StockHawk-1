@@ -24,7 +24,7 @@ public class LineGraphActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_graph);
         LineChartView mChart = (LineChartView) findViewById(R.id.chart1);
-        Intent intent = new Intent();
+        Intent intent = getIntent();
         String Stock_Symbol = intent.getStringExtra("Stock_Symbol");
         Cursor c = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                 new String[]{QuoteColumns.SYMBOL}, QuoteColumns.SYMBOL + "= ?",
@@ -33,15 +33,14 @@ public class LineGraphActivity extends AppCompatActivity {
 // Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder
 //        final Runnable mBaseAction;
 //
-        final float[] mValues = new float[]{};
-        final String[] mLabels = new String[]{Stock_Symbol};
+        float[] mValues = new float[c.getCount()];
+        String[] mLabels = new String[c.getCount()];
 
 
-        int datasize = c.getCount();
         c.moveToFirst();
-        for (int i = 1; i <= datasize && c.getPosition() != 0; i++) {
-            mValues[i] = Float.parseFloat(QuoteColumns.BIDPRICE);
-
+        for (int i = 0; i < c.getCount(); i++) {
+            mValues[i] = Float.parseFloat(c.getString(c.getColumnIndex(QuoteColumns.BIDPRICE)));
+            mLabels[i] = "T" + (i + 1);
             c.moveToNext();
 
         }
