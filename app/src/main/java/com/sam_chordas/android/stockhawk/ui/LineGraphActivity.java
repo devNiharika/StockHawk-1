@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import com.db.chart.Tools;
 import com.db.chart.model.LineSet;
@@ -32,6 +33,7 @@ public class LineGraphActivity extends AppCompatActivity implements LoaderManage
         mLineSet = new LineSet();
         mChartView = (ChartView) findViewById(R.id.chart1);
         Intent intent = getIntent();
+        getSupportActionBar().setTitle(intent.getStringExtra("Stock_Symbol"));
         Bundle args = new Bundle();
         args.putString("symbol", intent.getStringExtra("Stock_Symbol"));
         getLoaderManager().initLoader(0, args, this);
@@ -40,12 +42,14 @@ public class LineGraphActivity extends AppCompatActivity implements LoaderManage
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(this, QuoteProvider.Quotes.CONTENT_URI,
-                new String[]{QuoteColumns.BIDPRICE}, QuoteColumns.SYMBOL + "= ?", new String[]{args.getString("symbol")}, null);
+                new String[]{QuoteColumns.NAME, QuoteColumns.BIDPRICE}, QuoteColumns.SYMBOL + "= ?", new String[]{args.getString("symbol")}, null);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursor = data;
+        mCursor.moveToFirst();
+        setNameTextView();
         drawGraph();
     }
 
@@ -54,8 +58,13 @@ public class LineGraphActivity extends AppCompatActivity implements LoaderManage
 
     }
 
+    public void setNameTextView() {
+        TextView textView = (TextView) findViewById(R.id.stock_name);
+        textView.setText(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.NAME)));
+
+    }
+
     public void drawGraph() {
-        mCursor.moveToFirst();
         int k = mCursor.getCount();
         for (int i = 0; i < k; i++) {
             float price = Float.parseFloat(mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
