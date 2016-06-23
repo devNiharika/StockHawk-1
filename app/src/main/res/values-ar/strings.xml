@@ -13,4 +13,5 @@
     <string name="symbol_search">رمز البحث</string>
     <string name="widget_title">" السوق اليوم "</string>
     <string name="action_refresh">"اعادة تنشيط"</string>
+    <string name="message">" لا يوجد مخزون رمز لعرضه "</string>
 </resources>

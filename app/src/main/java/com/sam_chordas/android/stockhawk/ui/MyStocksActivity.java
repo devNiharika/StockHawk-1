@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -44,6 +46,8 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
     private static final int CURSOR_LOADER_ID = 0;
     boolean isConnected;
+
+
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
@@ -71,11 +75,14 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         if (savedInstanceState == null) {
             // Run the initialize task service so that some stocks appear upon an empty database
             mServiceIntent.putExtra("tag", "init");
+
             if (isConnected) {
                 startService(mServiceIntent);
             } else {
                 networkToast();
             }
+
+
         }
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -169,6 +176,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             // are updated.
             GcmNetworkManager.getInstance(this).schedule(periodicTask);
         }
+
     }
 
 
@@ -233,6 +241,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         mCursorAdapter.swapCursor(data);
         mCursor = data;
+        if (mCursor.getCount() == 0)
+            message();
+
+        mCursor.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                if (mCursor.getCount() == 0)
+                    message();
+            }
+        });
+
     }
 
     @Override
@@ -252,4 +271,13 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         }
     }
 
+    public void message() {
+        TextView textView = (TextView) findViewById(R.id.message);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        textView.setVisibility(View.VISIBLE);
+
+
+    }
+
 }
+
