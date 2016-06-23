@@ -14,5 +14,5 @@
     <string name="add">"Add Stock"</string>
     <string name="widget_title">"Today's Market"</string>
     <string name="action_refresh">"Refresh"</string>
-    <string name="message">"No Stock Symbol to display"</string>
+    <string name="message">"No Stock Symbol to display. Please press the refresh button or add some new Stock Symbol"</string>
 </resources>

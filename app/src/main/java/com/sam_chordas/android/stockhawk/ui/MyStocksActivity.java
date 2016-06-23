@@ -242,13 +242,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         mCursorAdapter.swapCursor(data);
         mCursor = data;
         if (mCursor.getCount() == 0)
-            message();
+            showmessage();
+        else
+            hidemessage();
 
         mCursor.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
                 if (mCursor.getCount() == 0)
-                    message();
+                    showmessage();
+                else
+                    hidemessage();
             }
         });
 
@@ -271,12 +275,17 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         }
     }
 
-    public void message() {
+    public void showmessage() {
         TextView textView = (TextView) findViewById(R.id.message);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         textView.setVisibility(View.VISIBLE);
 
 
+    }
+
+    public void hidemessage() {
+
+        TextView textView = (TextView) findViewById(R.id.message);
+        textView.setVisibility(View.GONE);
     }
 
 }
